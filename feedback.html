@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Зворотній зв'язок</title>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="/icon.png" alt="logo">
+            <h1>Онлайн-консультації "WealthAdvisor"</h1>
+        </div>
+    </header>
+
+    <a href="/index.html">На головну</a>
+
+    <div class="feedback-form">
+        <fieldset class="personal-info">
+            <legend>Персональна інформація</legend>
+            <input placeholder="Прізвище та ім'я">
+            <input type="email" placeholder="E-mail">
+            <input type="number" placeholder="Вік">
+        </fieldset>
+        <label for="feedback-purpose">Мета звернення</label>
+        <select id="feedback-purpose">
+            <option>Співпраця</option>
+            <option>Скарга на якість послуги</option>
+            <option>Пропозиція</option>
+            <option>Наявність помилок на сайті</option>
+            <option>Інше</option>
+        </select>
+        <div class="details">
+            <label>Детально</label>
+            <textarea placeholder="Опишіть детальніше свою проблему/побажання" maxlength="300" style="width: 250px; height: 150px;"></textarea>
+        </div>
+        <div class="personal-information-agreement">
+            <input type="checkbox" id="agreement" required>
+            <label for="agreement">Даю згоду на обробку персональної інформації</label>
+        </div>
+        <div class="send-feedback">
+            <button>Надіслати</button>
+        </div>
+        
+    </div>
+
+</body>
+</html>

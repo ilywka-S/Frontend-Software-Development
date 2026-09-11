@@ -13,9 +13,9 @@
         </div>
     </header>
 
-    <a href="/index.html">На головну</a>
+    <a href="/index.html"><button>На головну</button></a>
 
-    <div class="feedback-form">
+    <form class="feedback-form">
         <fieldset class="personal-info">
             <legend>Персональна інформація</legend>
             <input placeholder="Прізвище та ім'я">
@@ -24,11 +24,11 @@
         </fieldset>
         <label for="feedback-purpose">Мета звернення</label>
         <select id="feedback-purpose">
-            <option>Співпраця</option>
-            <option>Скарга на якість послуги</option>
-            <option>Пропозиція</option>
-            <option>Наявність помилок на сайті</option>
-            <option>Інше</option>
+            <option value="cooperation">Співпраця</option>
+            <option value="complaint">Скарга на якість послуги</option>
+            <option vlaue="offer">Пропозиція</option>
+            <option value="errors">Наявність помилок на сайті</option>
+            <option value="other">Інше</option>
         </select>
         <div class="details">
             <label>Детально</label>
@@ -42,7 +42,7 @@
             <button>Надіслати</button>
         </div>
         
-    </div>
+    </form>
 
 </body>
 </html>

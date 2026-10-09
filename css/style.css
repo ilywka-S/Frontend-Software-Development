@@ -1,0 +1,433 @@
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #f0f4f8;
+    color: #333333;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+h1, h2, h3 {
+    font-family: Georgia, "Times New Roman", serif;
+    color: rgb(20, 50, 100);
+    margin-top: 0;
+}
+
+h1 + h3 {
+    color: #555;
+    font-weight: normal;
+}
+
+h2::before {
+    content: "▷";
+    color: #7b2cbf;
+}
+
+h2::after {
+    content: "";
+    display: block;
+    height: 3px;
+    background-color: #7b2cbf;
+}
+
+a {
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+button {
+    cursor: pointer;
+    padding: 12px 24px;
+    background-color: #0056b3;
+    color: white !important;
+    border: none;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    white-space: nowrap;
+}
+
+button:hover {
+    background-color: #004494;
+}
+
+.page-index {
+    position: relative;
+    padding-top: 130px;
+}
+
+.page-index header, .page-services header, .page-feedback header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 20px 40px;
+    box-sizing: border-box;
+    z-index: 1000;
+}
+
+.page-index header {
+    position: absolute;
+    top: 0; 
+    left: 0;
+    margin-top: 0;
+}
+
+header .logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+header .logo img {
+    height: 50px;
+}
+
+header .logo h1 {
+    margin: 0;
+    font-size: 1.8em;
+}
+
+header nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
+}
+
+header nav a.nav-link {
+    color: #4a148c;
+    font-size: 17px;
+    font-weight: bold;
+    padding: 5px 10px;
+}
+
+header nav a.nav-link:hover {
+    color: #0056b3;
+}
+
+.index-container {
+    display: grid; 
+    grid-template-columns: 1fr; 
+    gap: 30px;
+    max-width: 90%;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+
+.page-index aside {
+    top: 150px;
+    background-color: white;
+    padding: 25px;
+    text-align: center;
+    height: max-content;
+}
+
+.page-index .purpose {
+    margin: 15px 0;
+    padding: 40px;
+    background-color: white;
+    max-height: 400px;
+    overflow-y: auto; 
+    border: 1px solid #f0f0f0;
+    line-height: 1.6;
+}
+
+.page-index .purpose > p:first-of-type::first-letter {
+    color: #E0B0FF;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    font-size: 3.5em;
+    float: left;
+    margin-right: 12px;
+    line-height: 0.8;
+}
+
+.page-index .history table {
+    width: 100%;
+    background-color: white;
+    border-collapse: collapse;
+    transition: transform 0.4s ease;
+}
+
+.page-index .history table th,
+.page-index .history table td {
+    padding: 15px;
+    border: 1px solid #eee;
+    text-align: left;
+}
+
+.page-index .history table th {
+    background-color: #f8f9fa;
+    color: #0056b3;
+}
+
+.page-index .history table:hover {
+    transform: translate(-5px, 5px);
+}
+
+.page-index .contacts {
+    position: relative;
+    z-index: 1;
+    background-color: white;
+    padding: 25px;
+    margin: 40px auto;
+    max-width: 90%;
+    text-align: center;
+    transition: color 0s 2s, font-weight 0s 2s, font-size 0s 2s; 
+}
+
+.page-index .contacts:hover {
+    color: red;
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.page-services {
+    padding-top: 130px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.page-services header {
+    position: fixed; 
+    top: 0;
+    left: 0;
+}
+
+.page-services > a {
+    display: inline-block;
+    margin: 0 0 30px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none; 
+}
+
+.page-services > a:link {
+    color: lightgreen; 
+}
+
+.page-services > a:visited {
+    color: purple; 
+}
+
+.page-services .service ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    list-style: none;
+    padding: 0 20px;
+}
+
+.page-services .service li {
+    background-color: white;
+    border-top: thin solid darkblue;
+    border-right: 3px dotted darkblue;
+    border-bottom: 3px dotted darkblue;
+    border-left: 3px dotted darkblue;
+    padding: 25px;
+    text-align: center;
+}
+
+.page-services .service img {
+    max-width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+@keyframes toNegative {
+    100% { filter: invert(100%); }
+}
+
+.page-services .service img:hover {
+    animation-name: toNegative;
+    animation-duration: 0.6s;
+}
+
+.page-services .service table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.page-services .service table td:last-child {
+    font-weight: bold;
+    font-size: 1.3em;
+    font-style: italic;
+    color: darkblue;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+.page-services .service table td:first-child {
+    padding-bottom: 15px;
+    color: #555;
+    line-height: 1.5;
+}
+
+.page-feedback {
+    padding-top: 130px;
+    padding-bottom: 40px;
+}
+
+.page-feedback header {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.page-feedback > a {
+    display: block;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.page-feedback .feedback-form {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 25px;
+    background-color: white;
+    padding: 40px;
+    max-width: 600px;
+    margin: 0 auto;
+    height: 1000px;
+}
+
+.page-feedback .personal-info {
+    order: 1;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border: 1px solid #e0e0e0;
+    padding: 25px;
+    background-color: #fcfcfc;
+}
+
+.page-feedback input[type="email"],
+.page-feedback input[type="number"],
+.page-feedback input[type="text"],
+.page-feedback select,
+.page-feedback textarea {
+    padding: 14px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+    font-size: 15px;
+    transition: border-color 0.3s;
+}
+
+.page-feedback input:focus,
+.page-feedback select:focus,
+.page-feedback textarea:focus {
+    border-color: #0056b3;
+    outline: none;
+}
+
+.page-feedback .purpose-group {
+    order: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.page-feedback .details {
+    order: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.page-feedback .details textarea {
+    height: 120px;
+    resize: vertical;
+}
+
+.page-feedback .personal-information-agreement {
+    order: 4;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #555;
+}
+
+.page-feedback .personal-information-agreement input {
+    width: auto;
+    cursor: pointer;
+}
+
+.page-feedback .send-feedback {
+    order: 5;
+    align-self: center;
+    width: 100%;
+}
+
+.page-feedback .send-feedback button {
+    width: 100%;
+    font-size: 16px;
+    padding: 16px;
+}
+
+
+
+@media (max-width: 1100px) {
+    .page-index { padding-top: 180px; }
+    .page-services { padding-top: 180px; }
+    .page-feedback { padding-top: 180px; }
+}
+
+@media (max-width: 900px) {
+    .index-container {
+        grid-template-columns: 1fr; 
+    }
+    .page-index aside {
+        position: static;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .page-index { padding-top: 230px; }
+    .page-services { padding-top: 230px; }
+    .page-feedback { padding-top: 230px; }
+}
+
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        padding: 15px 20px;
+    }
+    header .logo {
+        flex-direction: column;
+        gap: 10px;
+    }
+    header nav {
+        justify-content: center;
+        width: 100%;
+    }
+    .page-index { padding-top: 290px; }
+    .page-services { padding-top: 290px; }
+    .page-feedback { padding-top: 290px; }
+}
+
+@media (max-width: 480px) {
+    header nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+    header nav button {
+        width: 100%;
+    }
+    .page-index { padding-top: 360px; }
+    .page-services { padding-top: 360px; }
+    .page-feedback { padding-top: 360px; }
+}

@@ -1,16 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Зворотній зв'язок</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="page-feedback">
     <header>
         <div class="logo">
-            <img src="/icon.png" alt="logo">
+            <img src="images/icon.png" alt="logo">
             <h1>Онлайн-консультації "WealthAdvisor"</h1>
         </div>
+        
+        <nav>
+            <a href="/index.html" class="nav-link">Головна</a>
+            <a href="/services.html" class="nav-link">Послуги</a>
+        </nav>
     </header>
 
     <a href="/index.html"><button>На головну</button></a>
@@ -18,31 +24,35 @@
     <form class="feedback-form">
         <fieldset class="personal-info">
             <legend>Персональна інформація</legend>
-            <input placeholder="Прізвище та ім'я">
+            <input type="text" placeholder="Прізвище та ім'я">
             <input type="email" placeholder="E-mail">
             <input type="number" placeholder="Вік">
         </fieldset>
-        <label for="feedback-purpose">Мета звернення</label>
-        <select id="feedback-purpose">
-            <option value="cooperation">Співпраця</option>
-            <option value="complaint">Скарга на якість послуги</option>
-            <option vlaue="offer">Пропозиція</option>
-            <option value="errors">Наявність помилок на сайті</option>
-            <option value="other">Інше</option>
-        </select>
+        
+        <div class="purpose-group">
+            <label for="feedback-purpose">Мета звернення</label>
+            <select id="feedback-purpose">
+                <option value="cooperation">Співпраця</option>
+                <option value="complaint">Скарга на якість послуги</option>
+                <option value="offer">Пропозиція</option>
+                <option value="errors">Наявність помилок на сайті</option>
+                <option value="other">Інше</option>
+            </select>
+        </div>
+
         <div class="details">
             <label>Детально</label>
-            <textarea placeholder="Опишіть детальніше свою проблему/побажання (макс 300 символів)" maxlength="300" style="width: 250px; height: 150px;"></textarea>
+            <textarea placeholder="Опишіть детальніше свою проблему/побажання (макс 300 символів)" maxlength="300"></textarea>
         </div>
+        
         <div class="personal-information-agreement">
             <input type="checkbox" id="agreement" required>
             <label for="agreement">Даю згоду на обробку персональної інформації</label>
         </div>
-        <div class="send-feedback">
-            <button>Надіслати</button>
-        </div>
         
+        <div class="send-feedback">
+            <button type="submit">Надіслати</button>
+        </div>
     </form>
-
 </body>
 </html>

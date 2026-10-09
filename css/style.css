@@ -55,7 +55,7 @@ button:hover {
 
 .page-index {
     position: relative;
-    padding-top: 130px;
+    padding-top: 150px;
 }
 
 .page-index header, .page-services header, .page-feedback header {
@@ -231,7 +231,7 @@ header nav a.nav-link:hover {
     border-bottom: 3px dotted darkblue;
     border-left: 3px dotted darkblue;
     padding: 25px;
-    text-align: center;
+    text-align: center; 
 }
 
 .page-services .service img {
@@ -249,6 +249,7 @@ header nav a.nav-link:hover {
 .page-services .service img:hover {
     animation-name: toNegative;
     animation-duration: 0.6s;
+    animation-fill-mode: forwards;
 }
 
 .page-services .service table {
@@ -314,8 +315,8 @@ header nav a.nav-link:hover {
 }
 
 .page-feedback input[type="email"],
-.page-feedback input[type="number"],
-.page-feedback input[type="text"],
+.page-feedback input[type~="number"],
+.page-feedback input[type*="text"],
 .page-feedback select,
 .page-feedback textarea {
     padding: 14px;

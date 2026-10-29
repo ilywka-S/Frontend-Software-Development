@@ -21,7 +21,7 @@
 
     <a href="/index.html"><button>На головну</button></a>
 
-    <form class="feedback-form">
+    <form class="feedback-form" onsubmit="event.preventDefault();">
         <fieldset class="personal-info">
             <legend>Персональна інформація</legend>
             <input type="text" placeholder="Прізвище та ім'я">
@@ -40,9 +40,11 @@
             </select>
         </div>
 
-        <div class="details">
+        <div class="details" style="position: relative;">
             <label>Детально</label>
-            <textarea placeholder="Опишіть детальніше свою проблему/побажання (макс 300 символів)" maxlength="300"></textarea>
+            <textarea id="details-input" placeholder="Опишіть детальніше свою проблему/побажання (макс 300 символів)" maxlength="300"></textarea>
+            
+            <span class="tooltip" id="details-tooltip">Вдячні за Ваш час!<br>Конкретизуйте мету звернення, будь ласка</span>
         </div>
         
         <div class="personal-information-agreement">

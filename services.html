@@ -21,6 +21,10 @@
     
     <a href="index.html">На головну</a>
 
+    <div id="carousel-container">
+        <img id="carousel-img" src="images/juridical_consult.jpg" alt="Послуги карусель">
+    </div>
+
     <div class="service">
         <ul>
             <li>
@@ -84,6 +88,16 @@
                 </table>
             </li>
         </ul>
+    </div>
+
+    <div id="diagnostic-modal" class="modal">
+        <div class="modal-content">
+            <h3>Засумнівались? Напишіть!</h3>
+            <p id="modal-question">Потрібна консультація або роз'яснення даної послуги? Напишіть, ми допоможемо!</p>
+            <input type="text" placeholder="Ваша відповідь..." style="width: 90%; padding: 10px; margin: 15px 0; border: 1px solid #ccc; border-radius: 4px;">
+            <br>
+            <button onclick="document.getElementById('diagnostic-modal').style.display='none'">Надіслати</button>
+        </div>
     </div>
 
     <script src="js/script.js"></script>

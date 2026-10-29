@@ -5,6 +5,7 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
+    transition: background-color 0.5s ease;
 }
 
 h1, h2, h3 {
@@ -73,7 +74,7 @@ button:hover {
 
 .page-index header {
     position: absolute;
-    top: 0; 
+    top: 0;
     left: 0;
     margin-top: 0;
 }
@@ -91,6 +92,7 @@ header .logo img {
 header .logo h1 {
     margin: 0;
     font-size: 1.8em;
+    font-weight: 600;
 }
 
 header nav {
@@ -112,14 +114,13 @@ header nav a.nav-link:hover {
 }
 
 .index-container {
-    display: grid; 
-    grid-template-columns: 1fr; 
+    display: grid;
+    grid-template-columns: 1fr;
     gap: 30px;
     max-width: 90%;
     margin: 0 auto;
     padding: 0 20px;
 }
-
 
 .page-index aside {
     top: 150px;
@@ -134,7 +135,7 @@ header nav a.nav-link:hover {
     padding: 40px;
     background-color: white;
     max-height: 400px;
-    overflow-y: auto; 
+    overflow-y: auto;
     border: 1px solid #f0f0f0;
     line-height: 1.6;
 }
@@ -179,7 +180,7 @@ header nav a.nav-link:hover {
     margin: 40px auto;
     max-width: 90%;
     text-align: center;
-    transition: color 0s 2s, font-weight 0s 2s, font-size 0s 2s; 
+    transition: color 0s 2s, font-weight 0s 2s, font-size 0s 2s;
 }
 
 .page-index .contacts:hover {
@@ -195,7 +196,7 @@ header nav a.nav-link:hover {
 }
 
 .page-services header {
-    position: fixed; 
+    position: fixed;
     top: 0;
     left: 0;
 }
@@ -205,15 +206,15 @@ header nav a.nav-link:hover {
     margin: 0 0 30px 20px;
     font-size: 18px;
     font-weight: bold;
-    text-decoration: none; 
+    text-decoration: none;
 }
 
 .page-services > a:link {
-    color: lightgreen; 
+    color: lightgreen;
 }
 
 .page-services > a:visited {
-    color: purple; 
+    color: purple;
 }
 
 .page-services .service ul {
@@ -231,7 +232,7 @@ header nav a.nav-link:hover {
     border-bottom: 3px dotted darkblue;
     border-left: 3px dotted darkblue;
     padding: 25px;
-    text-align: center; 
+    text-align: center;
 }
 
 .page-services .service img {
@@ -322,7 +323,7 @@ header nav a.nav-link:hover {
     border: 1px solid #ccc;
     font-family: inherit;
     font-size: 15px;
-    transition: border-color 0.3s;
+    transition: border-color 0.3s, background-color 0.3s, box-shadow 0.3s;
 }
 
 .page-feedback input:focus,
@@ -376,58 +377,132 @@ header nav a.nav-link:hover {
     padding: 16px;
 }
 
-
-
 @media (max-width: 1100px) {
-    .page-index { padding-top: 180px; }
-    .page-services { padding-top: 180px; }
-    .page-feedback { padding-top: 180px; }
+.page-index { padding-top: 180px; }
+.page-services { padding-top: 180px; }
+.page-feedback { padding-top: 180px; }
 }
 
 @media (max-width: 900px) {
-    .index-container {
-        grid-template-columns: 1fr; 
-    }
-    .page-index aside {
-        position: static;
-        width: 100%;
-        box-sizing: border-box;
-    }
-    .page-index { padding-top: 230px; }
-    .page-services { padding-top: 230px; }
-    .page-feedback { padding-top: 230px; }
+.index-container {
+    grid-template-columns: 1fr;
+}
+.page-index aside {
+    position: static;
+    width: 100%;
+    box-sizing: border-box;
+}
+.page-index { padding-top: 230px; }
+.page-services { padding-top: 230px; }
+.page-feedback { padding-top: 230px; }
 }
 
-
 @media (max-width: 768px) {
-    header {
-        flex-direction: column;
-        justify-content: center;
-        text-align: center;
-        padding: 15px 20px;
-    }
-    header .logo {
-        flex-direction: column;
-        gap: 10px;
-    }
-    header nav {
-        justify-content: center;
-        width: 100%;
-    }
+header {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 15px 20px;
+}
+header .logo {
+    flex-direction: column;
+    gap: 10px;
+}
+header nav {
+    justify-content: center;
+    width: 100%;
+}
     .page-index { padding-top: 290px; }
     .page-services { padding-top: 290px; }
     .page-feedback { padding-top: 290px; }
 }
 
 @media (max-width: 480px) {
-    header nav {
-        flex-direction: column;
-        gap: 10px;
+header nav {
+    flex-direction: column;
+    gap: 10px;
+}
+header nav button {
+    width: 100%;
+}
+.page-index { padding-top: 360px; }
+.page-services { padding-top: 360px; }
+.page-feedback { padding-top: 360px; }
+}
+
+#typing-container {
+    color: #28a745;
+    margin-top: 5px;
+    font-size: 16px;
+    min-height: 20px;
+    white-space: pre-wrap;
     }
-    header nav button {
-        width: 100%;
+
+#carousel-container {
+    text-align: center;
+    margin: 20px auto;
+    width: 100%;
+}
+
+#carousel-img {
+    max-height: 20vh;
+    width: auto;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: opacity 0.5s ease-in-out;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    z-index: 9999;
     }
-    .page-index { padding-top: 360px; }
-    .page-services { padding-top: 360px; }
-    .page-feedback { padding-top: 360px; }
+
+.modal-content {
+    background: white;
+    width: 350px;
+    margin: 15% auto;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+}
+
+.tooltip {
+    display: none;
+    position: absolute;
+    left: 104%;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #ffc107;
+    color: #333;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    white-space: nowrap;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+    z-index: 10;
+}
+
+.tooltip::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    margin-top: -6px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent #ffc107 transparent transparent;
+}
+
+.page-feedback .details textarea:hover {
+    background-color: #f0f7ff;
+    border: 1px solid #0056b3;
+    box-shadow: 0 4px 10px rgba(0, 86, 179, 0.25);
+}
+
+.page-feedback .details:hover .tooltip {
+    display: block;
 }

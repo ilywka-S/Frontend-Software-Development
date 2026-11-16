@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 
-// Головна сторінка входить до початкового пакета, решта сторінок завантажується за потреби.
 export const routes: Routes = [
   { path: '', component: HomeComponent, title: 'Головна | FireSim КА' },
   {

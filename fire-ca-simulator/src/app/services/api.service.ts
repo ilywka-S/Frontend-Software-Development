@@ -7,7 +7,6 @@ import {
 
 const CONFIDENCE: Record<string, string> = { l: 'низька', n: 'номінальна', h: 'висока' };
 
-/** Клієнт REST API серверної частини. Адреса /api проксіюється на бекенд (див. proxy.conf.json). */
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   private readonly http = inject(HttpClient);

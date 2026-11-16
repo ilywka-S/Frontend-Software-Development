@@ -5,8 +5,6 @@ import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    // Маршрутизація через # дозволяє розміщувати застосунок на будь-якому статичному хостингу.
-    // Решта сторінок підвантажується у фоні після відкриття головної, тому перехід між ними миттєвий.
     provideRouter(routes, withHashLocation(), withPreloading(PreloadAllModules)),
     provideHttpClient()
   ]

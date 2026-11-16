@@ -4,7 +4,6 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { RunRecord, Stats } from '../../models';
 
-// геометрія SVG-діаграми
 const W = 600, H = 220, LEFT = 48, RIGHT = 12, TOP = 12, BOTTOM = 28;
 const DIRECTIONS = ['схід', 'південний схід', 'південь', 'південний захід',
                     'захід', 'північний захід', 'північ', 'північний схід'];

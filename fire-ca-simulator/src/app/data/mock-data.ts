@@ -1,7 +1,3 @@
-// Набір даних у форматі NASA FIRMS, Copernicus DEM та ERA5.
-// Для підключення реальних джерел достатньо замінити вміст цього модуля
-// (або DataService), зберігши структуру інтерфейсів.
-
 export interface BoundingBox { west: number; east: number; south: number; north: number; }
 
 export interface FirePoint {

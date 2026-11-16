@@ -18,9 +18,8 @@ const DIRECTIONS = ['схід', 'південний схід', 'південь',
                     'захід', 'північний захід', 'північ', 'північний схід'];
 const SERVER_ERROR = 'Не вдалося зв’язатися із сервером. Переконайтеся, що бекенд запущено (npm start у каталозі backend).';
 const EMPTY_STATS: Stats = { step: 0, burning: 0, burned: 0, percent: 0, areaHa: 0 };
-const MAX_POINTS = 20;                      // має збігатися з MAX_IGNITIONS на сервері
+const MAX_POINTS = 20;
 
-// кольори клітин: вода, трава, ліс, густий ліс
 const FUEL_COLORS: number[][] = [[63, 127, 176], [138, 168, 74], [47, 93, 54], [31, 68, 38]];
 const BURNING_COLOR = [255, 90, 44];
 const BURNED_COLOR = [43, 51, 56];
@@ -40,7 +39,6 @@ export class SimulatorComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild('mapCanvas') mapCanvas?: ElementRef<HTMLCanvasElement>;
 
-  // дані із сервера
   readonly firms = signal<FirmsResponse | null>(null);
   readonly dem = signal<DemSummary | null>(null);
   readonly weather = signal<WeatherHour[]>([]);
@@ -50,19 +48,17 @@ export class SimulatorComponent implements AfterViewInit, OnDestroy {
   readonly error = signal('');
   readonly hint = signal('');
 
-  // карта та точки займання
   readonly mapId = signal(1);
   readonly ignitions = signal<Cell[]>([]);
   readonly size = computed(() => this.terrain()?.size ?? 60);
 
-  // стан симуляції
   readonly status = signal<Status>('idle');
   readonly hourIndex = signal(0);
   readonly frames = signal<Frame[]>([]);
   readonly series = signal<Stats[]>([]);
   readonly frameIdx = signal(0);
   readonly seed = signal<number | null>(null);
-  readonly runId = signal<string | null>(null);      // запуск, що відображається зараз
+  readonly runId = signal<string | null>(null);
 
   readonly statusText = computed(() => STATUS_TEXT[this.status()]);
   readonly lastStep = computed(() => Math.max(0, this.series().length - 1));
@@ -72,7 +68,6 @@ export class SimulatorComponent implements AfterViewInit, OnDestroy {
     return s ?? EMPTY_STATS;
   });
 
-  // швидкість і напрямок вітру зі складових ERA5 u10/v10
   readonly wind = computed(() => {
     const h = this.weather()[this.hourIndex()];
     if (!h) return null;
@@ -81,7 +76,6 @@ export class SimulatorComponent implements AfterViewInit, OnDestroy {
     return { speed: +speed.toFixed(1), rh: h.rh, name: DIRECTIONS[Math.round(deg / 45) % 8] };
   });
 
-  // найпотужніша гаряча точка (за FRP)
   readonly strongest = computed<FirePoint | null>(() => {
     const pts = this.firms()?.points ?? [];
     return pts.length ? pts.reduce((a, b) => (b.frp > a.frp ? b : a)) : null;
@@ -111,12 +105,10 @@ export class SimulatorComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void { this.clearTimer(); }
 
-  // --- дії користувача ---
   onHourChange(event: Event): void {
     this.hourIndex.set(Number((event.target as HTMLSelectElement).value));
   }
 
-  /** Клацання по карті: додає точку займання або прибирає наявну (лише до запуску). */
   onMapClick(event: MouseEvent): void {
     const t = this.terrain();
     const canvas = this.mapCanvas?.nativeElement;
@@ -162,7 +154,6 @@ export class SimulatorComponent implements AfterViewInit, OnDestroy {
 
   pause(): void { this.clearTimer(); this.status.set('paused'); }
 
-  /** Скидає симуляцію й підставляє випадкову карту (відмінну від поточної). */
   reset(): void {
     if (this.status() === 'calculating') return;
     this.clearTimer();
@@ -192,8 +183,7 @@ export class SimulatorComponent implements AfterViewInit, OnDestroy {
     this.api.deleteRun(id).subscribe({ next: () => this.refreshHistory(), error: () => this.error.set(SERVER_ERROR) });
   }
 
-  // --- допоміжне ---
-  /** Положення клітини на карті у відсотках (центр клітини). */
+
   cellPct(index: number): string { return ((index + 0.5) / this.size()) * 100 + '%'; }
 
   private nextMapId(): number {
@@ -207,7 +197,7 @@ export class SimulatorComponent implements AfterViewInit, OnDestroy {
     this.mapId.set(t.mapId);
     this.terrain.set(t);
     this.dem.set(d);
-    this.ignitions.set(t.firmsCells);          // за замовчуванням початкові осередки беруться з FIRMS
+    this.ignitions.set(t.firmsCells);
   }
 
   private ensureMap(id: number): Observable<void> {
@@ -252,7 +242,6 @@ export class SimulatorComponent implements AfterViewInit, OnDestroy {
     if (this.timer !== null) { clearInterval(this.timer); this.timer = null; }
   }
 
-  /** Малює карту палива та поточний кадр пожежі на canvas (одна клітина = один піксель). */
   private draw(): void {
     const t = this.terrain();
     const canvas = this.mapCanvas?.nativeElement;

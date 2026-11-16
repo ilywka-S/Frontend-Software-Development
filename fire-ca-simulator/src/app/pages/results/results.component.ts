@@ -14,7 +14,6 @@ export class ResultsComponent {
   private readonly api = inject(ApiService);
   readonly runs = signal<RunRecord[]>([]);
   readonly error = signal(false);
-  // останні 12 запусків у хронологічному порядку для діаграми
   readonly chart = computed(() => [...this.runs()].reverse().slice(-12));
 
   constructor() {

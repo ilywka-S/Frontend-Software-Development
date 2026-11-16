@@ -1,0 +1,72 @@
+<div class="content-page">
+  <nav class="breadcrumbs" aria-label="Шлях до сторінки">
+    <a routerLink="/simulator">Симулятор</a> /
+    <a routerLink="/simulator/results">Результати</a> /
+    <span>Запуск</span>
+  </nav>
+
+  @if (error()) {
+    <p class="alert" role="alert">{{ error() }}</p>
+    <button routerLink="/simulator/results" style="width: auto">&larr; До результатів</button>
+  } @else if (run(); as r) {
+    <h1>Запуск від {{ r.createdAt | date: 'dd.MM.yyyy HH:mm' }}</h1>
+
+    <h2>Параметри</h2>
+    <div class="table-wrap">
+      <table class="table">
+        <tr><td>Карта</td><td>№ {{ r.params.mapId ?? 1 }}</td></tr>
+        <tr><td>Точок займання</td><td>{{ r.params.ignitions?.length ?? '—' }}</td></tr>
+        <tr><td>Час ERA5 (UTC)</td><td>{{ r.params.time | date: 'dd.MM.yyyy HH:mm' : 'UTC' }}</td></tr>
+        <tr><td>Вітер</td><td>{{ r.params.windSpeed }} м/с, на {{ direction() }}</td></tr>
+        <tr><td>Вологість повітря</td><td>{{ r.params.rh }} %</td></tr>
+        <tr><td>Зерно випадковості (seed)</td><td>{{ r.params.seed }}</td></tr>
+      </table>
+    </div>
+
+    <h2>Підсумок</h2>
+    <div class="table-wrap">
+      <table class="table">
+        <tr><td>Тривалість</td><td>{{ r.summary.step }} кроків</td></tr>
+        <tr><td>Згоріла площа</td><td>{{ r.summary.areaHa }} га</td></tr>
+        <tr><td>Відсоток ураження</td><td>{{ r.summary.percent }} %</td></tr>
+      </table>
+    </div>
+
+    <h2>Розвиток пожежі в часі</h2>
+    <div class="chart-box">
+      <h3>Відсоток ураження за кроками</h3>
+      <svg class="line-chart" [attr.viewBox]="'0 0 ' + width + ' ' + height" role="img"
+           aria-label="Лінійна діаграма: відсоток ураженої площі залежно від кроку">
+        <line class="axis" [attr.x1]="left" [attr.y1]="bottomY" [attr.x2]="rightX" [attr.y2]="bottomY"></line>
+        <line class="axis" [attr.x1]="left" [attr.y1]="top" [attr.x2]="left" [attr.y2]="bottomY"></line>
+        <polyline [attr.points]="percentLine()" fill="none" stroke="var(--c-burn)" stroke-width="2"></polyline>
+        <text [attr.x]="left - 4" [attr.y]="top + 8" text-anchor="end">{{ maxPercent() }}%</text>
+        <text [attr.x]="left - 4" [attr.y]="bottomY" text-anchor="end">0</text>
+        <text [attr.x]="left" [attr.y]="height - 8">0</text>
+        <text [attr.x]="rightX" [attr.y]="height - 8" text-anchor="end">крок {{ lastStep() }}</text>
+      </svg>
+    </div>
+
+    <div class="chart-box">
+      <h3>Кількість клітин, що горять (розмір фронту)</h3>
+      <svg class="line-chart" [attr.viewBox]="'0 0 ' + width + ' ' + height" role="img"
+           aria-label="Лінійна діаграма: кількість клітин, що горять, залежно від кроку">
+        <line class="axis" [attr.x1]="left" [attr.y1]="bottomY" [attr.x2]="rightX" [attr.y2]="bottomY"></line>
+        <line class="axis" [attr.x1]="left" [attr.y1]="top" [attr.x2]="left" [attr.y2]="bottomY"></line>
+        <polyline [attr.points]="burningLine()" fill="none" stroke="var(--accent)" stroke-width="2"></polyline>
+        <text [attr.x]="left - 4" [attr.y]="top + 8" text-anchor="end">{{ maxBurning() }}</text>
+        <text [attr.x]="left - 4" [attr.y]="bottomY" text-anchor="end">0</text>
+        <text [attr.x]="left" [attr.y]="height - 8">0</text>
+        <text [attr.x]="rightX" [attr.y]="height - 8" text-anchor="end">крок {{ lastStep() }}</text>
+      </svg>
+    </div>
+
+    <div class="actions-row">
+      <button class="primary" [routerLink]="['/simulator']" [queryParams]="{ run: r.id }">Відтворити в симуляторі</button>
+      <button routerLink="/simulator/results">&larr; До результатів</button>
+      <button (click)="remove()">Видалити запуск</button>
+    </div>
+  } @else {
+    <p>Завантаження…</p>
+  }
+</div>

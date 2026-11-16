@@ -1,0 +1,71 @@
+<div class="content-page">
+  <nav class="breadcrumbs" aria-label="Шлях до сторінки">
+    <a routerLink="/simulator">Симулятор</a> / <span>Результати</span>
+  </nav>
+  <h1>Результати та аналіз</h1>
+  <p>Оскільки симулятор використовує ймовірнісний клітинний автомат, один запуск не дає остаточної відповіді: результат залежить від випадкових подій на кожному кроці. Тому кожен запуск автоматично зберігається на сервері, а на цій сторінці зібрано збережені запуски для порівняння.</p>
+
+  <h2>Збережені запуски</h2>
+  @if (error()) {
+    <p class="alert" role="alert">Не вдалося отримати історію запусків із сервера.</p>
+  } @else if (runs().length === 0) {
+    <p>Збережених запусків поки немає. Виконайте симуляцію на сторінці «Симулятор», і результат з’явиться тут.</p>
+  } @else {
+    <div class="chart-box">
+      <h3>Відсоток ураження за запусками (останні {{ chart().length }})</h3>
+      <div class="chart" role="img" aria-label="Стовпчаста діаграма відсотка ураження для збережених запусків">
+        @for (r of chart(); track r.id) {
+          <div class="bar" [style.height.%]="r.summary.percent"
+               [attr.title]="(r.createdAt | date: 'dd.MM.yyyy HH:mm') + ': ' + r.summary.percent + '%'"></div>
+        }
+      </div>
+      <div class="chart-axis"><span>раніше</span><span>пізніше</span></div>
+    </div>
+
+    <div class="table-wrap">
+      <table class="table">
+        <tr>
+          <th>Дата</th><th>Карта</th><th>Час ERA5, UTC</th><th>Вітер, м/с</th><th>Вологість, %</th>
+          <th>Кроків</th><th>Площа, га</th><th>Ураження, %</th><th></th>
+        </tr>
+        @for (r of runs(); track r.id) {
+          <tr>
+            <td>{{ r.createdAt | date: 'dd.MM.yyyy HH:mm' }}</td>
+            <td>{{ r.params.mapId ?? 1 }}</td>
+            <td>{{ r.params.time | date: 'HH:mm' : 'UTC' }}</td>
+            <td>{{ r.params.windSpeed }}</td>
+            <td>{{ r.params.rh }}</td>
+            <td>{{ r.summary.step }}</td>
+            <td>{{ r.summary.areaHa }}</td>
+            <td>{{ r.summary.percent }}</td>
+            <td><a [routerLink]="['/simulator/results', r.id]">Докладніше</a></td>
+          </tr>
+        }
+      </table>
+    </div>
+  }
+
+  <h2>Тлумачення параметрів</h2>
+  <table class="table">
+    <tr>
+      <th>Параметр</th>
+      <th>Вплив у моделі</th>
+    </tr>
+    <tr>
+      <td>Швидкість вітру</td>
+      <td>Фронт пожежі витягується за напрямком вітру, а проти вітру поширення сильно сповільнюється.</td>
+    </tr>
+    <tr>
+      <td>Вологість повітря</td>
+      <td>Зменшує ймовірність займання сусідніх клітин, тому пожежа поширюється повільніше.</td>
+    </tr>
+    <tr>
+      <td>Схил місцевості</td>
+      <td>Угору вогонь поширюється швидше, ніж униз.</td>
+    </tr>
+    <tr>
+      <td>Тип палива</td>
+      <td>Трава займається легко й вигоряє швидко, густий ліс займається важче, але горить довше.</td>
+    </tr>
+  </table>
+</div>

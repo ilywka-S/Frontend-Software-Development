@@ -1,0 +1,25 @@
+<div class="chart-box">
+  <h3>Гарячі точки, використані в симуляторі</h3>
+  @if (error()) {
+    <p class="alert" role="alert">Не вдалося отримати дані із сервера.</p>
+  } @else {
+    <div class="table-wrap">
+      <table class="table">
+        <tr>
+          <th>Широта</th><th>Довгота</th><th>Яскравість Ti4, K</th>
+          <th>FRP, МВт</th><th>Достовірність</th><th>Виявлено</th>
+        </tr>
+        @for (p of points(); track $index) {
+          <tr>
+            <td>{{ p.latitude }}</td>
+            <td>{{ p.longitude }}</td>
+            <td>{{ p.bright_ti4 }}</td>
+            <td>{{ p.frp }}</td>
+            <td>{{ conf(p.confidence) }}</td>
+            <td>{{ p.acq_date | date: 'dd.MM.yyyy' }}, {{ p.acq_time }}</td>
+          </tr>
+        }
+      </table>
+    </div>
+  }
+</div>

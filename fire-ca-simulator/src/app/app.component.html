@@ -1,0 +1,14 @@
+<header class="navbar">
+  <div class="logo">FireSim <span>КА</span></div>
+  <nav aria-label="Головна навігація">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Головна</a>
+    <a routerLink="/simulator" routerLinkActive="active">Симулятор</a>
+    <a routerLink="/methodology" routerLinkActive="active">Методологія</a>
+    <a routerLink="/data-sources" routerLinkActive="active">Джерела даних</a>
+    <a routerLink="/about" routerLinkActive="active">Про проєкт</a>
+  </nav>
+</header>
+
+<main class="container">
+  <router-outlet />
+</main>

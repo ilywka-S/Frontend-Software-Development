@@ -1,0 +1,145 @@
+@if (error()) {
+  <div class="alert" role="alert">{{ error() }}</div>
+}
+
+<div class="simulator-layout">
+  <aside class="controls-panel" aria-label="Вхідні дані та керування">
+    <h3>Вхідні дані</h3>
+
+    @if (loading()) {
+      <p class="map-note">Завантаження даних із сервера…</p>
+    }
+
+    @if (firms(); as f) {
+      <div class="data-block">
+        <h4>NASA FIRMS</h4>
+        <div class="stat-row"><span>Гарячі точки</span><span>{{ f.points.length }}</span></div>
+        @if (strongest(); as s) {
+          <div class="stat-row"><span>Потужність (FRP)</span><span>{{ s.frp }} МВт</span></div>
+          <div class="stat-row"><span>Дата виявлення</span><span>{{ s.acq_date | date: 'dd.MM.yyyy' }}</span></div>
+        }
+      </div>
+    }
+
+    @if (dem(); as d) {
+      <div class="data-block">
+        <h4>Copernicus DEM</h4>
+        <div class="stat-row"><span>Роздільна здатність</span><span>{{ d.resolution_m }} м</span></div>
+        <div class="stat-row"><span>Висота</span><span>{{ d.elevation_min }}–{{ d.elevation_max }} м</span></div>
+        <div class="stat-row"><span>Середній схил</span><span>{{ d.mean_slope_deg }}°</span></div>
+      </div>
+    }
+
+    @if (weather().length) {
+      <div class="data-block">
+        <h4>ERA5, погода</h4>
+        <div class="control-group">
+          <label for="hour">Час (UTC)</label>
+          <select id="hour" [disabled]="status() !== 'idle'" (change)="onHourChange($event)">
+            @for (h of weather(); track h.time; let i = $index) {
+              <option [value]="i" [selected]="i === hourIndex()">{{ h.time | date: 'dd.MM.yyyy HH:mm' : 'UTC' }}</option>
+            }
+          </select>
+        </div>
+        @if (wind(); as w) {
+          <div class="stat-row"><span>Вітер</span><span>{{ w.speed }} м/с, на {{ w.name }}</span></div>
+          <div class="stat-row"><span>Вологість</span><span>{{ w.rh }} %</span></div>
+        }
+      </div>
+    }
+
+    @if (terrain()) {
+      <div class="data-block">
+        <h4>Місцевість і точки займання</h4>
+        <div class="stat-row"><span>Карта</span><span>№ {{ mapId() }} з {{ terrain()!.mapIds.length }}</span></div>
+        <div class="stat-row"><span>Точок займання</span><span>{{ ignitions().length }}</span></div>
+        <div class="btn-row">
+          <button class="btn-small" (click)="clearPoints()" [disabled]="status() !== 'idle'">Очистити точки</button>
+          <button class="btn-small" (click)="useFirmsPoints()" [disabled]="status() !== 'idle'">Точки FIRMS</button>
+        </div>
+      </div>
+    }
+
+    <button class="primary" (click)="start()"
+            [disabled]="!terrain() || ignitions().length === 0 || status() === 'calculating' || status() === 'running' || status() === 'finished'">
+      {{ status() === 'paused' ? 'Продовжити' : status() === 'calculating' ? 'Розрахунок…' : 'Запустити' }}
+    </button>
+    <button (click)="pause()" [disabled]="status() !== 'running'">Пауза</button>
+    <button (click)="reset()" [disabled]="status() === 'calculating'">Скинути</button>
+
+    <div class="legend-grid" aria-label="Легенда">
+      <div class="legend-item"><span class="color-box" style="background: #8aa84a"></span>Трава</div>
+      <div class="legend-item"><span class="color-box" style="background: #2f5d36"></span>Ліс</div>
+      <div class="legend-item"><span class="color-box" style="background: #1f4426"></span>Густий ліс</div>
+      <div class="legend-item"><span class="color-box" style="background: #3f7fb0"></span>Вода</div>
+      <div class="legend-item"><span class="color-box" style="background: #ff5a2c"></span>Горить</div>
+      <div class="legend-item"><span class="color-box" style="background: #2b3338"></span>Згоріла</div>
+      <div class="legend-item"><span class="color-box" style="background: rgba(255, 90, 44, 0.3); border-color: #ff5a2c"></span>Точка займання</div>
+    </div>
+  </aside>
+
+  <section class="main-panel">
+    <div class="map-wrap" role="img" aria-label="Карта: клітинний автомат поширення пожежі. Клацніть, щоб поставити точку займання.">
+      <canvas #mapCanvas class="map-canvas" [class.pickable]="status() === 'idle'" (click)="onMapClick($event)"></canvas>
+      @for (c of ignitions(); track c.x * 1000 + c.y) {
+        <span class="hotspot" [style.left]="cellPct(c.x)" [style.top]="cellPct(c.y)"></span>
+      }
+      @if (status() === 'running') {
+        <div class="map-status">Виконується</div>
+      }
+      @if (status() === 'calculating') {
+        <div class="map-status">Розрахунок на сервері…</div>
+      }
+    </div>
+    <p class="map-note" role="status">
+      @if (hint()) {
+        {{ hint() }}
+      } @else if (status() === 'idle') {
+        Клацніть на карті, щоб поставити або прибрати точку займання.
+      }
+    </p>
+
+    <div class="stats-panel" aria-live="polite" style="margin-top: 1rem">
+      <div class="stat-row"><span>Крок</span><span>{{ stats().step }} / {{ lastStep() }}</span></div>
+      <div class="stat-row"><span>Клітин горить</span><span>{{ stats().burning }}</span></div>
+      <div class="stat-row"><span>Згоріла площа</span><span>{{ stats().areaHa }} га</span></div>
+      <div class="stat-row"><span>Відсоток ураження</span><strong>{{ stats().percent }}%</strong></div>
+      <div class="stat-row"><span>Стан</span><span>{{ statusText() }}</span></div>
+      @if (seed() !== null) {
+        <div class="stat-row"><span>Зерно випадковості (seed)</span><span>{{ seed() }}</span></div>
+      }
+      @if (runId(); as id) {
+        <a class="link-button" [routerLink]="['/simulator/results', id]">Докладні результати цього запуску &rarr;</a>
+      }
+    </div>
+
+    <div class="history">
+      <h3>Історія запусків</h3>
+      <a class="link-button" routerLink="/simulator/results">Усі результати &rarr;</a>
+      @if (history().length === 0) {
+        <p class="map-note">Збережених запусків ще немає. Кожен запуск автоматично зберігається на сервері.</p>
+      } @else {
+        <div class="table-wrap">
+          <table class="table">
+            <tr>
+              <th>Дата</th><th>Час ERA5, UTC</th><th>Вітер, м/с</th><th>Вологість, %</th><th>Площа, га</th><th></th>
+            </tr>
+            @for (r of history().slice(0, 5); track r.id) {
+              <tr>
+                <td>{{ r.createdAt | date: 'dd.MM.yyyy HH:mm' }}</td>
+                <td>{{ r.params.time | date: 'HH:mm' : 'UTC' }}</td>
+                <td>{{ r.params.windSpeed }}</td>
+                <td>{{ r.params.rh }}</td>
+                <td>{{ r.summary.areaHa }}</td>
+                <td>
+                  <button class="btn-small" (click)="open(r.id)" [disabled]="status() === 'calculating'">Переглянути</button>
+                  <button class="btn-small" (click)="remove(r.id)">Видалити</button>
+                </td>
+              </tr>
+            }
+          </table>
+        </div>
+      }
+    </div>
+  </section>
+</div>

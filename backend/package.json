@@ -1,0 +1,13 @@
+{
+  "name": "firesim-backend",
+  "version": "1.0.0",
+  "description": "Мінімальний бекенд симулятора поширення лісових пожеж (клітинний автомат)",
+  "private": true,
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node --test"
+  },
+  "engines": { "node": ">=18" }
+}

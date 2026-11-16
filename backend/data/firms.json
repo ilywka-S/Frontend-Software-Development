@@ -1,0 +1,38 @@
+{
+  "product": "NASA FIRMS VIIRS_SNPP_NRT (демонстраційні дані)",
+  "bbox": {
+    "west": 30.4,
+    "east": 30.6,
+    "south": 50.4,
+    "north": 50.5
+  },
+  "points": [
+    {
+      "latitude": 50.467,
+      "longitude": 30.442,
+      "bright_ti4": 345.2,
+      "acq_date": "2026-07-14",
+      "acq_time": "11:42",
+      "confidence": "h",
+      "frp": 14.8
+    },
+    {
+      "latitude": 50.469,
+      "longitude": 30.447,
+      "bright_ti4": 331.4,
+      "acq_date": "2026-07-14",
+      "acq_time": "11:42",
+      "confidence": "n",
+      "frp": 6.1
+    },
+    {
+      "latitude": 50.464,
+      "longitude": 30.437,
+      "bright_ti4": 338.0,
+      "acq_date": "2026-07-14",
+      "acq_time": "11:42",
+      "confidence": "n",
+      "frp": 8.3
+    }
+  ]
+}
